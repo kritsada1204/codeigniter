@@ -1,0 +1,1305 @@
+1. EP.6 HOW TO SET ENVIRONMENT CodeIgniter 
+สรุปการเซ็ต 
+มี 3 อัน 1. production = ไว้ขึ้นงานจริง 2. testing = เทสงานจริง 
+3.devevlop ใช้ตอนพัฒนา
+how to ใช้ 
+อยู่ในหน้า index.php บรรทัด 56 define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
+	//บรรทัดข้างบนเปลีัี่ยน สถานะโปรเจ็ค 
+
+
+2.EP.7 โปรแกรม Hello World CodeIgniter
+
+การทำหน้าเว็ป 
+1. ไปที่ welcome.php ใน controler ใช้ save as เพื่อเก็บไฟล์เก่าไว้ใช้ และเปลี่ยนชื่อไฟล์ใหม่เป็น hello.php
+2.เข้าไปที่view save as เหมือนเดิม เปลี่ยน welcome_message.php เป็นไฟลื hello_view.php 
+3. ต่อจากนั้นปรับแต่code ในไฟล์ view 
+4.ไปที่ไฟล์ controller hello.php เซ็ต ตามนี้
+
+class Hello extends CI_Controller {
+
+
+	public function index()
+	{
+		$this->load->view('hello_view');
+		
+	}
+}
+
+ต่อมาไปที่config หา route เปลี่ยน  $route['default_controller'] = 'Hello'; เป็นชื่อ class เราใช้ใหม่ 
+
+และเซ็ต 
+
+$route['default_controller'] = 'Hello';
+$route['404_override'] = '';
+$route['translate_uri_dashes'] = FALSE;
+
+e 8 EP.8 การใช้งาน HTML Helper br() CodeIgniter
+สำหรับ ep นี้เป็ฯการสาธิการใช้ tag heml ต้่างๆ เช่น hr br มีการเรียกใช้แบบธรมดาก็พิมในbodyทั่วไปตาามตย.1 
+<body>
+
+
+    
+    <h1>hello.view phph </h1>
+	<hr> 
+	1
+	2
+	2
+	<br>
+
+	ตย.2 run syntax html ด้วยคำสั่ง php 
+	<?php echo br(5);?>
+	bbb
+
+คราวนี้หากไม่มีการเปิดตัว html helper จะไม่สามารถrun code html ผ่าน phpได้ เราจำเป็นต้องมาในไฟล์ config-> autolode.php 
+เปลี่ยนตรงในโดยเต็มดังนี้ 
+$autoload['helper'] = array(); <- before
+$autoload['helper'] = array('html'); <- after 
+
+enjoyit 
+
+ep9  EP.9 การใช้งาน HTML Helper heading() CodeIgniter
+คล้าย ep 8 
+ตย.1 
+
+	<p>heading()</p>
+	<?php echo heading("Texttttt",1);?>
+	<?php echo heading("Texttttt",2);?>
+	<?php echo heading("Texttttt",3);?>
+	<?php echo heading("Texttttt",4);?>
+	<?php echo heading("Texttttt",5);?>
+	<?php echo heading("Texttttt",6);?>
+	<?php echo heading("Texttttt",1);?>
+
+	<h1>text</h1>
+	<h6>txtee</h6>
+
+	ep10 nbs() เป็นการแสดงผลให้มีการเว้นระยะข้อความ 
+
+	
+	<p>nbs()</p>
+	testing programmer <br>
+	testing &nbsp;  &nbsp;  &nbsp; &nbsp; programing
+	<?php
+		echo 'my website';
+		echo nbs(10);
+		echo 'devbanban.com';
+	
+	?>
+
+	ep11 ol(),ul() เป็นการแสดงผลให้มีข้อ ตามลำดัยเหมือน ปรนัย 
+
+	ตย. 
+
+	<p>OL()</p>
+	<?php
+		$list =array('a','b','c','d');
+		echo ol($list);
+
+		echo '<hr>';
+		echo ul($list);
+
+	?>
+
+	EP.12 การสร้าง Function ใน Controller และการเรียกใช้งาน CodeIgniter
+
+	ep 12 เป็นการอธิบายการสร้าง function ใหม่ จากตัวอย่างเป็นการเลือกฟังชั่นแบบ view หน้าใหม่ไว้ใช้สำหรับเราทำการสร้างหน้าเพิ่มเติม
+	เป็นรูปบบเรียกใช้ slut 
+
+	นี้คือ url ที่ใช้ http://localhost/ci/index.php/hello/index2
+	วิธีการ 
+	1. ไปที่ไฟล์ที่เราต้องการใฝนview 
+	2. เลือกไฟล์ hello_view.php ในที่นี้เราใช้ไฟล์นี้ 
+	3. เปปลี่ยนข้อความหรือสรา้งหน้าเว็ปที่ต้องการในไฟล์view
+	4. ไปที่ไฟล์ controller ตัวหลัก 
+	ตย. โค๊ด 
+
+	<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+class Hello extends CI_Controller {
+
+
+	public function index()
+	{
+		$this->load->view('hello_view');
+		
+	}
+
+	public function index2()
+	{
+		$this->load->view('index2_view');
+		
+	}
+}
+
+5. เราสร้างฟังชั่นขึ้นมา ในที่นี้คือ index2 ลืมไปบอก ไฟล์ใหม่เราตั้งชื่อว่า index2 นะครับ
+หลักจากนั้นกด save และพิมตามตย ก็จะได้หน้าเว้ปมาอีก 1 หน้าแล้ว 
+
+EP.13 การสร้าง Controller ใหม่ และการเรียกใช้งาน CodeIgniter
+
+ep นี้บอกว่า เราสร้างcontyroller เรียกใช้งานหน้าใหม่ โดยเริ่มจาก 
+1.สร้างไฟล์ php view 
+2. สร้าง controler 
+3.เปลี่ยนไฟล์ในcontroller หลัก ให้เจอ 
+
+ด้านล่างคือไฟล์ contorller ที่สรา้งขึ้นมาใหม่ เปลี่ยนตรง class ให้เป็นชื่อของcontroller ใหม่ 
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+class mypage extends CI_Controller {
+
+
+	public function index()
+	{
+		$this->load->view('mypage_view');
+		
+	}
+
+	
+}
+
+5. การเรียกใชช้งาน ต้องเรียกแบบนี้ http://localhost/ci/index.php/mypage/
+6. หากอยากเรียกสั่นๆต้องไปที่ config หาไฟล์ routes และปลี่ยน 
+$route['default_controller'] = 'mypage';  <-- ตรงนี้ 
+$route['404_override'] = '';
+$route['translate_uri_dashes'] = FALSE;
+
+EP.14 การเปิดใช้งาน URL HELPER และการ Link ไปยัง Controller อื่นๆ Codeigniter
+
+สำหรับ ep นี้เป็นการ เชื่อม path ต่างๆ ให้ สามามีลิงคตืเข้าถึง โดยขั้นตอนมี
+1.ไปที่ไฟล์ view ที่ต้องการ ใส่code ดังนี้ 
+    <h1> My page </h1>
+    <a href="<?php echo site_url('hello');?>">
+	link to hello</a> ตรง hello คือชื่อ controller 
+
+	<br>
+
+	<a href="<?php echo site_url('welcome');?>">
+	link to welcome</a>
+
+	<br>
+	<a href="<?php echo site_url('hello/index2');?>">
+	link to hello to index2</a>
+2. ไปที่ config หา autoload 
+$autoload['helper'] = array('html'); เปลี่ยนเป็ฯข้างล่าง
+$autoload['helper'] = array('html','url');
+
+
+
+EP.15 การแสดงภาพใน VIEW โดยใช้ base_url CodeIgniter
+
+วิธีแทรกรูปภาพลง มีดังต่อไปนี้ 
+1. ไปที่folder ของโปรเจ็ค 
+2. สร้างไฟล์ img มห้อยู่ภายใน folder project 
+3.โหลดรูปใส่ในภาพ 
+4.ใส่ syntax ในไฟล์ view.php แบบข้างล่าง  
+
+<img src="<?php echo base_url('img');?>/facebook.jpg" alt="" width="300px">
+
+EP.16 การเรียก CSS มาใช้งาน โดยใช้ link_tag ใน Codeigniter
+
+อันดับแรกเริ่มต้น สร้าง folder ใน ci ตั้ง css เอาไว้ใต้ folder application  
+2 สร้างไฟล์ใน Folder css = style.css
+3. ใส่โค๊ด ใน style.css  
+#fr{
+    color: green;
+}
+
+4. เข้าไฟล์ mycss.php ใน view  ลง โค๊ดดังนี้ 
+<?php echo link_tag('css/style.css');?>
+
+5.ไปที่ mypageview2 และสร้าง id ตามชื่อ ใน style.css
+
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+?><!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Welcome to CodeIgniter</title>
+
+
+</head>
+<body>
+    <h1 id="fr"> test Css </h1>
+    
+</body>
+</html>
+
+สุดท้ายมีที่ controller = Mypage.php 
+สร้างตัวเรียก class 
+
+public function index()
+	{	
+		
+		$this->load->view('mypage_view2');
+		
+	}
+
+5 after
+
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+class mypage extends CI_Controller {
+
+
+	public function index()
+	{	
+		$this->load->view('mycss');
+		$this->load->view('mypage_view2');
+		
+	}
+
+	
+}
+
+EP.17 การเรียก CSS มาใช้งาน แบบ CDN ใน CodeIgniter
+
+1.เข้า bootstrap 
+2.เลือก css cdn 
+3. copy <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+4.วางใน ไฟล์ mycss 
+5.เช็คในเพจหน้าแรก ด้วย view source page 
+
+
+
+
+EP.18 การเรียก JavaScript มาใช้งาน โดยใช้ base_url ใน CodeIgniter
+เข้าอันนี้http://code.jquery.com/jquery-3.3.1.min.js
+2.save as เลือก path ไปโปรเจ็คเรา ci/css
+3. เปลี่ยนชื่อไฟล์ เป็น jquery-3.3.1.min.js เป็น js.js 
+4.เข้า folder view สร้างไฟล์ใหม่ ชื่อ myjs.php
+5. สร้างscript ขึ้น กำหนด path  <script type="text/javascript" src="<?php echo base_url('css/js.js');?>"></script>
+
+ตย. 
+ไปสร้างตัวเรียก controller ในหน้า mypage 
+$this->load->view('myjs');
+
+
+EP.19 การเรียก JavaScript มาใช้งานแบบ CDN ใน Codeigniter
+1. download cdn = <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+
+และตรวจกับ view souce page 
+
+EP.20 การเปิดใช้งาน Form Helper ใน Codeigniter
+
+เซ็ค autoload $autoload['helper'] = array('html','url','form');
+2.เปิด mypage.php ไป save as หน้า php ตั้งชื่อเป็น form.php
+3เปลี่ยน class 
+
+before
+
+class Form extends CI_Controller {
+
+
+	public function index()
+	{
+		$this->load->view('hello_view');
+		
+	}
+
+	public function index2()
+	{
+		$this->load->view('index2_view');
+		
+	}
+}
+
+after
+class Form extends CI_Controller {
+
+
+	public function index()
+	{
+		$this->load->view('myform');
+		
+    }
+    
+    
+
+	
+}
+3หลังจากเรียกหน้าใหม่ได้แล้ว
+4ทำการเข้าไฟล์ welcome_messageเปลั้ยนเป็น myform.php ใน view ลบ style , body 
+
+5. ในหน้า view myform จะเป็น code การทำแบบฟอร์ม
+
+ต.ย. <form action="" method="post">
+    name : <input type="text" name="name" required placeholder="name">
+    <br>
+    lname : <input type="text" name="lname" required placeholder="lastname">
+    <br>
+    <button type="submit">save</button>
+
+
+</form>
+
+6. สร้างไฟล์ในform.php ฟังชั่นที่สร้างคือ showform 
+
+class Form extends CI_Controller {
+
+
+	public function index()
+	{
+		$this->load->view('myform');
+		
+    }
+
+    public function showform()
+	{
+		print_r($_POST);
+		
+    }
+    
+
+
+	
+}
+
+7.จะทำการเรียกให้แสดงข้อมูฃที่กรอกในแบบบฟอร์ททำแบบนี้ 
+กลับไปเพ่ม ที่ action ในโค๊ด ตาราาง
+
+ต.ย. 
+<form action="<?php echo site_url('form/showform');?>" method="post">
+    name : <input type="text" name="name" required placeholder="name">
+    <br>
+    lname : <input type="text" name="lname" required placeholder="lastname">
+    <br>
+    <button type="submit">save</button>
+
+
+</form>
+
+8 กด submit แล้ว จะมีหน้าใหม่โดยเปลรายนpath เป็น form/showform หลังกด submit เสร็จ 
+
+EP.21 แสดงข้อมูลจาก Formใน Codeigniter
+
+สร้างตัวแปร aray มาก่อนเพื่อรับค่าข้อมูลส่งมาจากform และเรียกแสดงที่view 
+
+ต.ย. form.php
+
+ public function showform()
+    {
+        $data = array(
+            'name' => $this->input->post('name'),
+            'lname' => $this->input->post('lname')
+
+        );
+
+        $this->load->view('form_view');
+
+        echo '<pre>';   
+        print_r($_POST);
+        echo '</pre>';
+		
+    }
+    
+    
+
+	
+}
+
+หลังจากนั้น สร้าง form_view.php ขึ้นมาเป็นตัวcode 
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+?><!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Welcome to CodeIgniter</title>
+
+	
+</head>
+<body>
+้<h1> show data </h1>
+<?php echo $name;?>
+
+- ไปที่ form.php 
+ต.ย.
+
+    public function showform()
+    {
+        $data = array(
+            'name' => $this->input->post('name'),
+            'lname' => $this->input->post('lname')
+
+        );
+
+        $this->load->view('form_view',$data);
+
+        echo '<pre>';   
+        print_r($_POST);
+        echo '</pre>';
+		
+    }
+
+</body>
+</html>
+
+ต.ย. ทั้งหมดเพื่อโชว์ข้อมมูล
+1. form.php<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+class Form extends CI_Controller {
+
+
+	public function index()
+	{
+		$this->load->view('myform');
+		
+    }
+
+    public function showform()
+    {
+        $data = array(
+            'name' => $this->input->post('name'),
+            'lname' => $this->input->post('lname')
+
+        );
+
+        $this->load->view('form_view',$data);
+
+        //echo '<pre>';   
+        //print_r($_POST);
+        //echo '</pre>';
+		
+    }
+    
+    
+
+	
+}
+
+2.form_view
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+?><!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Welcome to CodeIgniter</title>
+
+	
+</head>
+<body>
+้<h1> show data </h1>
+<?php echo $name, ' ' ,$lname;?>
+
+	
+
+</body>
+</html>
+
+EP.22 การติดตั้ง Bootstrap 4 เพื่อใช้งานใน CodeIgniter
+1. ไำปที่controler form เอาไฟล์ไปใช้ต่อ 
+2.เปลี่ยน class form ดเป็นโฮม และ ลบให้เหลือฟังชั่น index และเปลี่ยน ตจรง this ให้เป็น home_view
+3.ไปที่ไฟล์ myform.php save as เปลี่ยนชื่อเป็น home-view
+4.ไปที่ route เปลี่ยน ไฟล์เป็น ใส่ชื่อ class 'home ' 
+
+ตย. 
+้home 
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+class Home extends CI_Controller {
+
+
+	public function index()
+	{
+		$this->load->view('home_view');
+		
+    }
+
+   
+    
+
+	
+}
+home view 
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+?><!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Welcome to CodeIgniter</title>
+
+	
+</head>
+<body>
+้<h1> My Home </h1>
+
+	
+
+</body>
+</html>
+
+route 
+
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+/*
+| -------------------------------------------------------------------------
+| URI ROUTING
+| -------------------------------------------------------------------------
+| This file lets you re-map URI requests to specific controller functions.
+|
+| Typically there is a one-to-one relationship between a URL string
+| and its corresponding controller class/method. The segments in a
+| URL normally follow this pattern:
+|
+|	example.com/class/method/id/
+|
+| In some instances, however, you may want to remap this relationship
+| so that a different class/function is called than the one
+| corresponding to the URL.
+|
+| Please see the user guide for complete details:
+|
+|	https://codeigniter.com/user_guide/general/routing.html
+|
+| -------------------------------------------------------------------------
+| RESERVED ROUTES
+| -------------------------------------------------------------------------
+|
+| There are three reserved routes:
+|
+|	$route['default_controller'] = 'welcome';
+|
+| This route indicates which controller class should be loaded if the
+| URI contains no data. In the above example, the "welcome" class
+| would be loaded.
+|
+|	$route['404_override'] = 'errors/page_missing';
+|
+| This route will tell the Router which controller/method to use if those
+| provided in the URL cannot be matched to a valid route.
+|
+|	$route['translate_uri_dashes'] = FALSE;
+|
+| This is not exactly a route, but allows you to automatically route
+| controller and method names that contain dashes. '-' isn't a valid
+| class or method name character, so it requires translation.
+| When you set this option to TRUE, it will replace ALL dashes in the
+| controller and method URI segments.
+|
+| Examples:	my-controller/index	-> my_controller/index
+|		my-controller/my-method	-> my_controller/my_method
+*/
+$route['default_controller'] = 'home';
+$route['404_override'] = '';
+$route['translate_uri_dashes'] = FALSE;
+
+4.ไปที่ mycss.php save as  เปลี่ยนชื่อเป็น css.php
+5. เอา cdn เพื่อติดตั้ง bootstrap
+ไป ลงในไฟล์ css.php 
+6. ไปที่ controler เอาไฟล์ css ไว้ใน home.php 
+	public function index()
+	{
+        $this->load->view('css'); <--
+		$this->load->view('home_view');
+		
+    }
+
+	7.สร้าง view สำหรับ css ไปที่ css.php -> save as -> js.php
+	ก๊อป ฟั่ง js ภ่ยใน get bootrap มา จะมี 3 ชุด 
+
+
+	EP.23 การสร้างหน้าเว็บง่ายๆ Register Form Bootstrap 4, CodeIgniter
+1. ส้รางไฟล์ view เพื่อเขียนcode 
+2. สร้างไฟล์ controler.php รับค่า
+3.วางlay out code ในหน้า view 
+
+
+EP.24 การสร้างหน้าเว็บง่ายๆ Register Form Bootstrap 4, CodeIgniter
+	
+1. ส้รางหน้า php ก่อน คือหน้า register.php < ไฟล์ฺ controller ต้องตัวใหญ่ 
+เปลี่ยนค่าข้างใน จาก this->load->view('..._view') - > register_view ตามชื่อที่ต้งอการ ไฟล์ view ตัวเลข 
+ 2. สร้าง view นั้นคือ register_view.php ก๊อปจาก 
+3. อย่าลืมแก้ class ใน Register.php เป็น Register ด้วย 
+	public function index()
+	{
+        $this->load->view('css');
+		$this->load->view('register_view');
+		$this->load->view('js');
+    }
+
+
+มาเริ่มสร้างหน้าเว็ป bootstrap
+อันดับแรกจำไว้เริ่มจาก view ตลอดโดยใรที่นี้เราใช้home งั้นก็เป็น
+home_view.php
+<body>
+้<h1> My Home </h1>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			
+		</div>
+	</div>
+</div>
+	
+	2. หลังจากนั้น การสร้างหน้าต้องมีรูป เราต้องสร้างไฟ img มา ให้อยู่ในชั้นเดียวกับพวก folder css
+	
+ถ้ามีแล้วก็เอารูปใส่ และเตรียมทำ ไฟลื src เพื่อแสดงรูป
+
+ต.ย. ใส่รูป
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<img src="<?php echo base_url('img/cover.jpg');?>" width="100%" alt="">
+		</div>
+	</div>
+</div>
+
+ถ้าอยากได้ตัวอย่างให้ไปที่เว็ป getbootstrap
+
+เรามาทำเมนูของเว็ปกัน เริ่มง่าย จากการสร้าง contaniner ก่อน
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Navbar</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Link</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Dropdown
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#">Disabled</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
+		</div>
+	</div>
+</div>
+
+	
+
+3.ต่อปสร้างหน้าproduct 
+<div class="container">
+<div class="row">
+<div class="col-md-12">
+<h4> product list</h4>
+</div>
+<div class="col-md-4">
+	<img src="img/cover.jpg" alt="" width="100%">
+	<p align="center">
+	mywabsite <br>
+	<a href="" class="btn btn-primary"> more</a>
+	</p>
+</div>
+</div>
+</div>
+
+4.สร้างไฟล์เชื่อม css 
+ในhead homw_view 
+<link href="css/style.css" rel="stylesheet">
+
+5.ใน css 
+
+ต้องทำไฟล์เชื่อม css ่กนอค่อยมาต่อ
+
+
+ep 25 EP.25 การสร้างหน้าเว็บง่ายๆ Login Form Bootstrap 4, Codeigniter
+1.ไฟล์ home_view ส้ราางเมนู
+
+<li class="nav-item">
+        <a class="nav-link" href="<?php echo site_url('login');?>">login</a>
+      </li>
+
+1.ไฟล์ rigster.php
+2
+
+เพิ่ม class login 
+
+class register extends CI_Controller {
+
+	
+    public function index()
+    
+	{
+        $this->load->view('css');
+        $this->load->view('register_view');
+        $this->load->view('js');
+    }
+
+    public function adding()
+    
+	{
+        echo '<pre>';
+        print_r($_POST);
+        echo '</pre>';
+
+    }
+
+    public function login()
+    
+	{
+        $this->load->view('css');
+        $this->load->view('login_view');
+        $this->load->view('js');
+
+    }
+
+2.ไปที่ register_view เพื่อ save as login_view
+3.เอา code nav จาก home_view เพราะสมบูรณ์สุด เอาเฉพาะเมนู จะได้เป็นเมนูเหมือนกันหมดถึงแม้เปลี่ยนหน้า จะเปลี่ยนแค่ body ตามหลักการทำงานจริง 
+
+4. เอาลงใน register .php 
+    public function showlogin()
+    
+	{
+        echo '<pre>';
+        print_r($_POST);
+        echo '</pre>';
+
+    }
+
+	5.ไปที่ login view เพื่อ ทำการล็อคอินและให้ทำงานได้ 
+
+	เพิ่ม action ใน form  login_view
+
+<h4>Form Login</h4>
+                    <form action="<?php echo site_url('register/showlogin');?>" method="post" class="form-horizontal">
+                     <div class="form-group row">
+                        <div class="col-sm-2 control-label"> Username </div>
+                            <div class="col-sm-5">
+                                <input type="text" name="username" required class="form-control" placeholder="username">
+                            </div>
+                        </div>
+
+	
+
+	
+	6.register .php 
+	public function showlogin()
+    
+	{
+        echo '<pre>';
+        print_r($_POST);
+        echo '</pre>';
+
+    }
+
+ไปที่ home.php ก๊อป ตัวเรียกหน้ามาเพื่อทำลงในหน้าใหม่
+copy ไฟล์ดังนี้ไปวา่งใน 
+$this->load->view('css');
+        $this->load->view('header');
+        $this->load->view('banner');
+        $this->load->view('navbar');
+        $this->load->view('register_view');
+        $this->load->view('footer');
+        $this->load->view('js');
+
+		7.ไปที่ login view ลองทดลองเอาcode ไปวางที่ view 
+
+
+		EP.27 Database Management in CodeIgniter
+ไปที่ config  
+		autoload 
+หา libraly 
+พิม database
+$autoload['libraries'] = array('database');
+
+ไปphpmyadmin สร้างdatabase 
+
+สร้างตตาราง ฐานข้อมใูล  เลือกพวก general ci
+tbl_member และสร้าง colummn ให้หมด 
+
+เมื่อตั้ง autoload แล้่ว จะเรียกทำงานไปที่ไฟล์ database.php 
+
+แก้พวกนี้ 
+
+$db['default'] = array(
+	'dsn'	=> '',
+	'hostname' => 'localhost',
+	'username' => '',
+	'password' => '',
+	'database' => '',
+	'dbdriver' => 'mysqli',
+	'dbprefix' => '',
+	'pconnect' => FALSE,
+	'db_debug' => (ENVIRONMENT !== 'production'),
+	'cache_on' => FALSE,
+	'cachedir' => '',
+	'char_set' => 'utf8',
+	'dbcollat' => 'utf8_general_ci',
+	'swap_pre' => '',
+	'encrypt' => FALSE,
+	'compress' => FALSE,
+	'stricton' => FALSE,
+	'failover' => array(),
+	'save_queries' => TRUE
+);
+
+
+$db['default'] = array(
+	'dsn'	=> '',
+	'hostname' => 'localhost',
+	'username' => 'root',
+	'password' => '',
+	'database' => 'ci',
+	'dbdriver' => 'mysqli',
+	'dbprefix' => '',
+	'pconnect' => FALSE,
+	'db_debug' => (ENVIRONMENT !== 'production'),
+	'cache_on' => FALSE,
+	'cachedir' => '',
+	'char_set' => 'utf8',
+	'dbcollat' => 'utf8_general_ci',
+	'swap_pre' => '',
+	'encrypt' => FALSE,
+	'compress' => FALSE,
+	'stricton' => FALSE,
+	'failover' => array(),
+	'save_queries' => TRUE
+);
+
+EP.27 Database Management in CodeIgniter
+
+
+ไป folder container save as หน้า home แก้เป็น 
+insertdata.php
+
+เปลี่ยน 
+class Insertdata extends CI_Controller {
+
+	
+    public function index()
+    
+	{
+
+		และไปที่ register_view ไปทำ view 
+
+
+
+		แก้ตรง body 
+
+		<h4>แบบ ฟอร์มสมัครสมาชิก</h4>
+                    <form action="<?php echo site_url('register/adding');?>" method="post" class="form-horizontal">
+                     
+
+                        <div class="form-group row">
+                        <div class="col-sm-2 control-label"> Password </div>
+                            <div class="col-sm-5">
+                                <input type="text" name="password" required class="form-control" placeholder="password">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                        <div class="col-sm-2 control-label"> name </div>
+                            <div class="col-sm-5">
+                                <input type="text" name="m_name" required class="form-control" placeholder="name">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                        <div class="col-sm-2 control-label"> lastname </div>
+                            <div class="col-sm-5">
+                                <input type="text" name="m_lname" required class="form-control" placeholder="lastname">
+                            </div>
+                        </div>
+
+                        
+
+                       
+
+                        
+
+                        <div class="form-group row">
+                        <div class="col-sm-2 control-label"> </div>
+                            <div class="col-sm-5">
+                                <button type="submit" class="btn btn-primary"> Save </button>
+                            </div>
+                        </div>
+
+
+						- ทดลองหน้าใหม่โดยแก้ route 
+
+
+						ตั้ง class ให้ตรงทั้งหมด 
+
+						<form action="<?php echo site_url('Insertdata/adding');?>" method="post" class="form-horizontal">
+
+						เพิ่มclass ทำการเรียแบบด้านบน 
+
+						จะดูการเรียกค่าโดยใช้ต้นแบบมาจาก form.php 
+
+						copy function showformไป 
+						
+						insertdata.php 
+
+						public function adding()
+	{
+         //echo '<pre>'; // พวกนี้วางไว้เผื่อเช็ค ว่าส่งค่าได้ไหม
+        //print_r($_POST);
+        //echo '</pre>';
+
+        //exit;
+
+		แก้เป็นชื่อshowform เป็น addmin 
+		
+//echo '<pre>'; // พวกนี้วางไว้เผื่อเช็ค ว่าส่งค่าได้ไหม
+        //print_r($_POST);
+        //echo '</pre>';
+
+        //exit;
+
+		พอสำเร็จแล้วก็เอามันไปลงฐานข้อมมูล 
+
+		 $data = array(
+            'm_name' => $this->input->post('m_name'),
+            'm_lname' => $this->input->post('m_lname')
+
+        );
+
+            $query=$this->db->insert('tbl_member',$data);
+
+            if($query){
+                echo 'add ok';
+            }else{
+                echo 'false';
+            }
+
+
+
+การนำ models มาใช้ 
+
+ไปืั้guide 
+http://localhost/ci/user_guide
+
+มาที่
+What is a Model?
+
+copy 
+
+class Blog_model extends CI_Model {
+
+        public $title;
+        public $content;
+        public $date;
+
+        public function get_last_ten_entries()
+        {
+                $query = $this->db->get('entries', 10);
+                return $query->result();
+        }
+
+        public function insert_entry()
+        {
+                $this->title    = $_POST['title']; // please read the below note
+                $this->content  = $_POST['content'];
+                $this->date     = time();
+
+                $this->db->insert('entries', $this);
+        }
+
+        public function update_entry()
+        {
+                $this->title    = $_POST['title'];
+                $this->content  = $_POST['content'];
+                $this->date     = time();
+
+                $this->db->update('entries', $this, array('id' => $_POST['id']));
+        }
+
+}
+						
+
+						ไปที่model สร้างไฟล์ 
+						Member_model.php วางไฟล์ และ เปิด code php
+						
+
+						- ไปที่insertdata หา guide user ค้นหา controller class constructors
+
+						copy อันนี้
+						public function __construct()
+        {
+                parent::__construct();
+                // Your own constructor code
+        }
+
+		จะย้ายโค๊ดไปสร้างfunction ใน model 
+
+		ก็หาว่าสร้างยังไง 
+
+		<?php
+    class Member_model extends CI_Model {
+        public function __construct()
+        {
+                parent::__construct();
+                $this->load->model('member_model');
+        }
+
+}
+
+
+
+มีการเปลี่ย2ไฟล์ 
+
+1member_model 
+
+<?php
+    class Member_model extends CI_Model {
+        public function addmember()
+        $data = array(
+            'm_name' => $this->input->post('m_name'),
+            'm_lname' => $this->input->post('m_lname')
+
+        );
+
+            $query=$this->db->insert('tbl_member',$data);
+
+            if($query){
+                echo 'add ok';
+            }else{
+                echo 'false';
+            }
+
+
+
+
+}
+
+2. เอาfunctionเก่าออก 
+
+public function adding()
+	{
+         //echo '<pre>'; // พวกนี้วางไว้เผื่อเช็ค ว่าส่งค่าได้ไหม
+        //print_r($_POST);
+        //echo '</pre>';
+
+        //exit;
+
+       
+
+
+        //echo '<pre>';
+        //print_r($_POST);
+        //echo '</pre>';
+	}
+
+	3.ไปที่ insert data
+	<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+class Insertdata extends CI_Controller {
+
+	
+    public function index()
+    
+	{
+        $this->load->view('css');
+        //$this->load->view('header');
+        $this->load->view('banner');
+        $this->load->view('navbar');
+        $this->load->view('insert_view');
+        $this->load->view('footer');
+        $this->load->view('js');
+    }
+
+    public function adding()
+	{
+         //echo '<pre>'; // พวกนี้วางไว้เผื่อเช็ค ว่าส่งค่าได้ไหม
+        //print_r($_POST);
+        //echo '</pre>';
+
+        //exit;
+
+       $this->member_model->addmember();
+
+
+        //echo '<pre>';
+        //print_r($_POST);
+        //echo '</pre>';
+	}
+    
+	
+
+	
+}
+
+	
+
+	สรุปหน้า insert data 
+
+	<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+class Insertdata extends CI_Controller {
+
+    public function __construct()
+        {
+                parent::__construct();
+                // Your own constructor code
+                $this->load->model('member_model');
+        }
+
+	
+    public function index()
+    
+	{
+        $this->load->view('css');
+        //$this->load->view('header');
+        $this->load->view('banner');
+        $this->load->view('navbar');
+        $this->load->view('insert_view');
+        $this->load->view('footer');
+        $this->load->view('js');
+    }
+
+    public function adding()
+	{
+         //echo '<pre>'; // พวกนี้วางไว้เผื่อเช็ค ว่าส่งค่าได้ไหม
+        //print_r($_POST);
+        //echo '</pre>';
+
+        //exit;
+
+       $this->member_model->addmember();
+
+
+        //echo '<pre>';
+        //print_r($_POST);
+        //echo '</pre>';
+	}
+    
+	
+
+	
+}
+
+EP.31 How to query data in CodeIgniter
+
+  public function get_last_ten_entries()
+        {
+                $query = $this->db->get('entries', 10);
+                return $query->result();
+        }
+
+        เอาลง member_model 
+        
+        public function showdata()
+        {
+                $query = $this->db->get('tbl_member');
+                return $query->result();
+        }
+
+
+เอาข้ิอมมูลมาจากไฟล์ insert data 
+
+ไป config ไป route เปลีร่ยน 
+
+$route['default_controller'] = 'insertdata';
+
+ไฟล์ insert 
+
+    public function index()
+    
+	{
+        $data['query']=$this->member_model->showdata();
+
+        print_r($data);  << เช็คระบบว่าถูกไหม ถ้าถูก comment 
+
+        exit;
+
+        หรือ 
+
+        {
+        $data['query']=$this->member_model->showdata();
+
+        echo '<pre>';
+        print_r($data);
+        echo '</pre>';
+
+        exit;
+
+        $this->load->view('css');
+        //$this->load->view('header');
+        $this->load->view('banner');
+        $this->load->view('navbar');
+        $this->load->view('insert_view');
+        $this->load->view('footer');
+        $this->load->view('js');
+    }
+
+
+    EP.32 Display data in table form Database CodeIgniter
+
+    ทำตตัวแสดงฃไปไฟล์ insert_view sava as แก้เดป็น member_view 
+
+    โค๊ด member viewe 
+
+    <div class="container">
+    <div class="row">
+        <div class="col-md-7">
+            
+                <h4>showmember </h4>
+
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>name</th>
+                            <th>lname</th>
+                            <th>datasave</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($query as $rs) { ?>
+                        <tr>
+                            <td><?php echo $rs->m_id;?></td>
+                            <td><?php echo $rs-> m_name;?></td>
+                            <td>data</td>
+                            <td>data</td>
+                        </tr>
+                        <?php } ?>
+                    </tbody>
+                </table>
+                    
+                </div>
+    </div>
+
+</div>
+
+
+
+ไฟล์ insert data 
+
+ $this->load->view('css');
+        //$this->load->view('header');
+        $this->load->view('banner');
+        $this->load->view('navbar');
+        $this->load->view('insert_view');
+        $this->load->view('member_view', $data);
+        $this->load->view('footer');
+        $this->load->view('js');
