@@ -1303,3 +1303,35 @@ $route['default_controller'] = 'insertdata';
         $this->load->view('member_view', $data);
         $this->load->view('footer');
         $this->load->view('js');
+
+        
+
+        ep 333 สร้างตัวแก้ ข้อมู ลง
+
+        มาที่ member_view ทำแก้โค๊ะเพื่อ edit 
+
+               </thead>
+                    <tbody>
+                    <?php foreach ($query as $rs) { ?>
+                        <tr>
+                            <td><?php echo $rs->m_id;?></td>
+                            <td><?php echo $rs-> m_name;?></td>
+                            <td>data</td>
+                            <td>data</td>
+
+                            <td>
+                              <a href="<?php echo site_url('insertdata/edit/').$rs->m_id;?>
+                              ">edit
+                              </a></td>
+                        </tr>
+                        <?php } ?>
+
+                        ไปที่ insert_veiw 
+                        
+                    member_model
+                        ไปที่ model สร้าง query ไว้ 
+
+                        
+
+                        ไป  insertdata 
+                        
